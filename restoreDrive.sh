@@ -16,5 +16,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ########################################################################
 # - Restore all drive partitions with dd 
-# - Posibly restore from a gziped archive containing
+# - Restore from a ziped archive containing
 #   .img files for each image partition
+# - Uses 2 arguments 
+#   - First the path of the image backup
+#   - Second the drive you want to restore to
+#     e.g. /dev/sdb or /dev/sdc or /dev/hdb
+########################################################################
+# this lists the files in the archive
+unzip -Z -1 $1
+

@@ -22,6 +22,12 @@
 # - Figure out a way to do feedback for running dd command.
 # - User must only specify a drive itself, this tool is NOT for creating partition
 #   backups. dd does that already, that is a component of this tool
+if $1 == '-l';then
+	# show the devices available for imageing on the system
+	ls /dev;
+	exit;
+fi
+# start standard program execution
 tempDir="/tmp/$1backup";
 ext=".img";
 mkdir -p $tempDir/dev;
@@ -33,5 +39,8 @@ for item in $(find /dev | grep $1);do
 		echo "dd if=$item of=$tempDir$item$ext" > $tempDir$item$ext;#DEBUG
 	fi
 done
-finExt=.tar.gz
-tar -czvf $1$finExt $(find $tempDir/dev | grep $1);
+# zip up the images into a single compressed file for storage
+# -j deletes the path info and stores only the files
+# -9 is the highest compression level
+ext=".imageBackup"
+zip -j -9 $1$ext $(find $tempDir/dev | grep $1);
